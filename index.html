@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Learningconstraints.GitHub.io : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Learningconstraints.GitHub.io</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/learningconstraints">View on GitHub</a>
+
+          <h1 id="project_title">Learningconstraints.GitHub.io</h1>
+          <h2 id="project_tagline"></h2>
+
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="learning-constraints" class="anchor" href="#learning-constraints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Learning Constraints</h1>
+
+<p>Variability intensive systems may include several thousand features allowing for an enormous number of possible configurations, including wrong ones (e.g. the derived product does not compile). For years, engineers have been using  constraints to a priori restrict the space of possible configurations, i.e. to exclude configurations that would violate these constraints. The challenge is to find the set of constraints that would be both precise (allow all correct configurations) and complete (never allow a wrong configuration with respect to some oracle). In this repository, you will find the implementation of a machine learning approach to infer such product-line constraints from an oracle that is able to assess whether a given product is correct. </p>
+
+<ol>
+<li>We generate products from the product line, keeping for each of them its resolution model. </li>
+<li>We classify these products according to the oracle, and use their resolution models to infer cross-tree constraints over the product-line. </li>
+<li><p>We offer the experimentation data to validate our approach on a product-line video generator, using a simple computer vision algorithm as an oracle. </p></li>
+</ol>
+
+<ul>
+<li>SPLC'16 in the XXX reposity wou will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
