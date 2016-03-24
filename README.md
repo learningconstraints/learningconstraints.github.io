@@ -5,7 +5,7 @@ Variability intensive systems may include several thousand features allowing for
 2. We classify these products according to the oracle, and use their resolution models to infer cross-tree constraints over the product-line. 
 3. We offer the experimentation data to validate our approach on a product-line video generator, using a simple computer vision algorithm as an oracle. 
 
-SPLC'16 in the XXX reposity wou will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference
+SPLC'16 In the XXX repository, you will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference
 
 
 
