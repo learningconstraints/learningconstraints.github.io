@@ -1,55 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Learningconstraints.GitHub.io : ">
+    <title>Learningconstraints.GitHub.io by learningconstraints</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Learningconstraints.GitHub.io</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/learningconstraints">View On GitHub</a></li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/learningconstraints">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Learningconstraints.GitHub.io</h1>
-          <h2 id="project_tagline"></h2>
+      <section>
+        <div id="title">
+          <h1>Learningconstraints.GitHub.io</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/learningconstraints">learningconstraints</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <h1>
-<a id="learning-constraints" class="anchor" href="#learning-constraints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Learning Constraints</h1>
+<a id="learning-based-performance-specialization-of-configurable-systems-submitted-at-icse17" class="anchor" href="#learning-based-performance-specialization-of-configurable-systems-submitted-at-icse17" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Learning-Based Performance Specialization of Configurable Systems (submitted at ICSE'17)</h1>
 
-<p>Variability intensive systems may include several thousand features allowing for an enormous number of possible configurations, including wrong ones (e.g. the derived product does not compile). For years, engineers have been using  constraints to a priori restrict the space of possible configurations, i.e. to exclude configurations that would violate these constraints. The challenge is to find the set of constraints that would be both precise (allow all correct configurations) and complete (never allow a wrong configuration with respect to some oracle). In this repository, you will find the implementation of a machine learning approach to infer such product-line constraints from an oracle that is able to assess whether a given product is correct. </p>
+<p>A large scale configurable system typically offers thousands of options or parameters to let the engineers customize it for specific needs. Among the resulting many billions possible configurations, relating option and parameter values to desired performance is then a daunting task relying on a deep know how of the internals of the configurable system. We propose a staged configuration process to narrow the space of possible configurations to a good approximation of those satisfying the wanted high level customer requirements. Based on an oracle (e.g. a runtime test) that tells us whether a given configuration meets the non-functional requirements (e.g. speed or memory footprint), we leverage machine learning to retrofit the acquired knowledge into a variability model of the system that can be used to automatically specialize the configurable system. </p>
+
+<p><strong>SPLC'16</strong>: In the repository <a href="https://github.com/learningconstraints/SPLC-16">https://github.com/learningconstraints/SPLC-16</a>,  you will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference. The goal was mostly to avoid <em>faulty</em> configurations and correct a video generator developed in the industry. The oracle was simply a yes/no procedure. </p>
+
+<p>In <strong>ICSE'17</strong>, we have considered performance qualities. The oracle is parametrized with an <strong><em>objective value</em></strong> that users of our specialization method can control. Hence our proposal can be seen as a generalization of the idea originally proposed in SPLC'16. Moreover our empirical results cover more systems and classification metrics while taking training sizes and objective values into account.</p>
+
+<p><strong>Objective of this page</strong>: Our ICSE'17 results show that, for many different kinds of objectives and performance qualities, the approach has interesting accuracy, precision and recall after a learning stage based on a relative small number of random samples. This page describes how we gather and process input data, how we compute classification metrics. Furthermore, all plots, heatmaps, and figures can be visualized. We aim here to supplement our original material (it is impossible to include all relevant figures we have generated!) and also support an independent verification and replication of our study. </p>
+
+<h2>
+<a id="empirical-study" class="anchor" href="#empirical-study" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Empirical Study</h2>
+
+<h4>
+<a id="subject-systems" class="anchor" href="#subject-systems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Subject systems</h4>
+
+<p>We performed our experiments on a publicly-available dataset used in previous works. The dataset includes sets of configurations of real-world configurable systems that have been executed and measured over different performance metrics (more details hereafter). Configurable systems come from various domains and are implemented in different languages (C, C++ and Java). The number of options varies from as little as ten, up to about sixty; options can take Boolean and numerical values. The two last columns show, first, the total number of different possible configurations existing for the system and, last, the number of configurations that have been generated and measured in previous works ("All" meaning all different configurations have been measured).
+It should be noted that most benchmarks measure a single performance value, except for x264 where benchmarks evaluate 7 performance metrics.</p>
+
+<h4>
+<a id="experimental-setup" class="anchor" href="#experimental-setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experimental setup</h4>
+
+<p>For each subject system, we have randomly selected a certain number of configurations from the ones available in the public dataset: our ML method operates over a <strong><em>training sample</em></strong> to learn a separating function. All remaining configurations form the <strong><em>test sample</em></strong>, i.e., it is the whole configuration set minus the training set. They are used to verify whether the classification of our ML is correct. For instance, the public dataset contains 69,000 different configurations for x264. If we used 500 of them to learn constraints, then we evaluate the classification quality of ML on the remaining 68,500 configurations.</p>
+
+<p>For each configurable system, we make <strong><em>vary the sample size</em></strong> one by one, from 1 to the total number of configurations. We make vary the <em>objective value</em> between the lower and upper bounds of the performance measured in each dataset. We notice that threshold values have direct influence on the
+<strong><em>percentage of acceptable configurations</em></strong>. For instance, for x264, an execution time (speed) threshold less than 100s leads to only 21.4% of acceptable configurations. We thus vary the objective value from 0% to 100% of acceptable configuration with steps of 5%.</p>
+
+<h4>
+<a id="reproducibility" class="anchor" href="#reproducibility" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reproducibility</h4>
+
+<p>For the sake of verifiability and reproducibility of the experiments we provide:</p>
+
+<ul>
+<li>All heatmaps, plots, and figures. We can only present a few figures
+in a typical academic paper (because of the page number limit) and we
+aim to supplement it.<br>
+
+<ul>
+<li>A git repository containing all data and the
+scripts used to: i) execute the procedures over different
+configurable systems; ii) generate all the different graphs,
+heatmaps, etc.<br>
+</li>
+<li>Details on how we have collected and prepared data</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="details-of-the-content" class="anchor" href="#details-of-the-content" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Details of the content</h2>
+
+<h3>
+<a id="heatmaps" class="anchor" href="#heatmaps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Heatmaps</h3>
+
+<p>X-axis: size of the training set
+Y-axis: percentage of acceptable configurations (as influenced by the objective treshold value)
+Classification metric: the darker, the higher is the classification metric (usually from 0 to 1)</p>
+
+<h3>
+<a id="code" class="anchor" href="#code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h3>
 
 <ol>
-<li>We generate products from the product line, keeping for each of them its resolution model. </li>
-<li>We classify these products according to the oracle, and use their resolution models to infer cross-tree constraints over the product-line. </li>
-<li>We offer the experimentation data to validate our approach on a product-line video generator, using a simple computer vision algorithm as an oracle. </li>
+<li>learning phase<br>
+</li>
+<li>computation of classification scores</li>
+<li>depicting heatmaps or plots
+(repeated 10 times)</li>
 </ol>
 
-<p><strong>SPLC'16</strong> In the <a href="https://github.com/learningconstraints/SPLC-16">https://github.com/learningconstraints/SPLC-16</a> repository, you will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference</p>
+<h3>
+<a id="input-data" class="anchor" href="#input-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Input data</h3>
+
+<p>Performance measurements of subject systems </p>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
