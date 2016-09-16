@@ -147,7 +147,8 @@ configurations that we want to keep. There are four possible situations represen
 <ul>
   <li>True Positives (TP) and True Negatives (TN) are on the main diagonal and represent the set of correctly classified configurations;</li>
   <li>False Positive (FP) and False Negatives (FN), on the contrary, represent classification errors</li>
-  <li>For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics.</li>
+  <li>For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics. 
+  <img src="/assets/figure.png" alt="Figure" /></li>
 </ul>
 
 <p>We rely on standard metrics used for binary classification problems. 
@@ -250,8 +251,6 @@ Another factor is the <strong>size of the training set</strong>. It may influenc
 
 <p>With our empirical results, we aim to further understand the effectiveness of our learning-based method w.r.t any performance objective and training set.
 For each configurable system, performance objective (defining the percentage of acceptable configurations in the population), and size of the training set, we have computed accuracy, precision, recall, NPV, specificity, negNPV and negAccuracy.</p>
-
-<p><img src="/assets/figure.png" alt="My helpful screenshot" /></p>
 
 <h4 id="reproducibility">Reproducibility</h4>
 

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>/lessons/2011/12/29/jekyll-introduction</loc>
-<lastmod>2011-12-29T00:00:00+01:00</lastmod>
-</url>
-<url>
 <loc>/archive</loc>
 </url>
 <url>
@@ -21,6 +17,6 @@
 </url>
 <url>
 <loc>/404.html</loc>
-<lastmod>2016-09-06T20:15:12+02:00</lastmod>
+<lastmod>2016-09-16T11:15:47+02:00</lastmod>
 </url>
 </urlset>
