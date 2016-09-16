@@ -33,17 +33,17 @@ For each configurable system, we make ***vary the sample size*** one by one, fro
 We consider that configurations are ***acceptable*** (resp. ***non-acceptable***) w.r.t a performance objective.
 
 Our learning-based technique can introduce errors in the following cases:
- * a configuration is valid (and thus classified as acceptable) despite being non-acceptable â€“ the system is under-constrained and unsafe;
- * a configuration is not valid (and thus classified as non-acceptable) despite being acceptable (the system is over-constrained and lacks flexibility).
+* a configuration is valid (and thus classified as acceptable) despite being non-acceptable â€“ the system is under-constrained and unsafe;
+* a configuration is not valid (and thus classified as non-acceptable) despite being acceptable (the system is over-constrained and lacks flexibility).
 
 We expect to observe such cases:
- * a configuration is valid and correctly classified as acceptable; 
- * a configuration is non-valid and correctly classified as non-acceptable.
+* a configuration is valid and correctly classified as acceptable; 
+* a configuration is non-valid and correctly classified as non-acceptable.
 
 In our case, positive class (also called class-1) corresponds to non-acceptable configurations that we want to discard. The negative class (also called class-0) corresponds to acceptable
 configurations that we want to keep. There are four possible situations represented in a confusion matrix (see Figure):
- * True Positives (TP) and True Negatives (TN) are on the main diagonal and represent the set of correctly classified configurations;
- * False Positive (FP) and False Negatives (FN), on the contrary, represent classification errors
+* True Positives (TP) and True Negatives (TN) are on the main diagonal and represent the set of correctly classified configurations;
+* False Positive (FP) and False Negatives (FN), on the contrary, represent classification errors
   
 For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics. 
   ![Figure]({{ site.url }}/assets/figure.png)
@@ -54,7 +54,7 @@ We used 5 metrics since they give a different and complementary perspective on t
 
 ### Classification metrics
 
- * **Accuracy** measures the portion of configurations accurately classified as acceptable and non-acceptable. It gives a global *classification* "performance" of the learning phase.  
+* **Accuracy** measures the portion of configurations accurately classified as acceptable and non-acceptable. It gives a global *classification* "performance" of the learning phase.  
 
 However accuracy alone can have limited interest since it hinders important phenomena. 
 In the example (see Figure),  you can have a high accuracy despite the clear limits of the learning phase of identifying non-acceptable configurations (precision is 29% and recall is 40%). 
@@ -66,10 +66,10 @@ On the other hand, accuracy is unable to show the weaknesses of a naÃ¯ve class
 Intuitively, in our specific problem, we also need to measure the precision and recall
 of our classification. It can give better insights on our ability to (1) discard non-acceptable configurations and (2) to keep acceptable configurations.
 
- * **Precision**: measure our ability to correctly classify non-acceptable configurations. 
+* **Precision**: measure our ability to correctly classify non-acceptable configurations. 
  In our example, precision is 40 / (100 + 40) = 40 / 140 = 29%. The learning wrongly classifies a large portion of non-acceptable configurations. 
 
- * **Recall** (also called true positive rate): measure our ability to comprehensively identify non-acceptable configurations. In our example, recall is 40 / (40 + 60) = 40%. 
+* **Recall** (also called true positive rate): measure our ability to comprehensively identify non-acceptable configurations. In our example, recall is 40 / (40 + 60) = 40%. 
 Here, the learning misses a large portion of non-acceptable configurations. 
 
 A low recall may be problematic, since numerous non-acceptable configurations have not been classified as such: Users may still choose ***unsafe*** configurations. 
@@ -78,8 +78,8 @@ are actually acceptable: Users may lose some ***flexibility***.
 
 Precision and recall measure the ability of our system to **classify** non-acceptable configurations. However it says nothing on how safe and flexible is our resulting
 specialized configurable system:
- * How many valid configurations of our resulting specialized configurable system are truly acceptable? A low proportion and users will perform numerous configuration errors since the system is not enough safe. 
- * How many configurations have been unnecessarily removed whereas they should still be reachable? A low proportion and users will have little configuration choices at their disposal.  
+* How many valid configurations of our resulting specialized configurable system are truly acceptable? A low proportion and users will perform numerous configuration errors since the system is not enough safe. 
+* How many configurations have been unnecessarily removed whereas they should still be reachable? A low proportion and users will have little configuration choices at their disposal.  
 
 We thus need two additional metrics. 
 **Specificity** (also called true negative rate) quantifies how flexible is
@@ -93,11 +93,11 @@ The example shows that, despite a low precision (29%) and recall (40%), the resu
 Our learning phase misses some opportunities and introduces some errors, but the overall process may still be of interest since we have a *safer* system than originally and the flexibility is arguably reasonable.
 
 Without a specialization, all configurations are classified as acceptable, and the metrics are as follows in our specific example:
- * accuracy is 90%
- * precision is ~0
- * recall is  0  
- * specificity is always 100% (the system is highly flexible) 
- * NPV is 90% (the system is quite safe), but it is less than 93%
+* accuracy is 90%
+* precision is ~0
+* recall is  0  
+* specificity is always 100% (the system is highly flexible) 
+* NPV is 90% (the system is quite safe), but it is less than 93%
 
 It shows an improvement of 3% for the safety of the system. Obviously, it is just an example. The potential of our technique mostly resides in cases the performance objective leads to numerous non-acceptable configurations: We can learn and identify them, leading to safer configurable systems. 
 
@@ -112,18 +112,18 @@ Similarly, we can compute negAccuracy (difference of accuracy between a non-spec
 ### Reading grid of classification metrics
 
 To sum up:
- * there are three classification metrics that measure our ability to *classify* (accuracy, precision, recall). 
- * accuracy gives a global classification "performance" of the learning phase 
- * accuracy alone has limitations since it does not quantify the classification of non-acceptable configurations; precision and recall should be used in complement 
- * high accuracy does not imply high precision or high recall: it is a theoretical statement (see formulae) and empirical results confirm there is no correlation between accuracy, precision and recall 
- * NPV and specificity characterize how safe and flexible is the resulting specialized system (precision and recall cannot) 
- * a high (resp. low) specifity means a high (resp. low) flexibility of the resulting system
- * a high (resp. low) NPV means a high (resp. low) safety of the resulting system
- * a low precision or low recall does not imply a low NPV or specificity. For instance, the classification metric can be low and, yet, leads to a highly safe and flexible system
+* there are three classification metrics that measure our ability to *classify* (accuracy, precision, recall). 
+* accuracy gives a global classification "performance" of the learning phase 
+* accuracy alone has limitations since it does not quantify the classification of non-acceptable configurations; precision and recall should be used in complement 
+* high accuracy does not imply high precision or high recall: it is a theoretical statement (see formulae) and empirical results confirm there is no correlation between accuracy, precision and recall 
+* NPV and specificity characterize how safe and flexible is the resulting specialized system (precision and recall cannot) 
+* a high (resp. low) specifity means a high (resp. low) flexibility of the resulting system
+* a high (resp. low) NPV means a high (resp. low) safety of the resulting system
+* a low precision or low recall does not imply a low NPV or specificity. For instance, the classification metric can be low and, yet, leads to a highly safe and flexible system
 
 A "specializer" (i.e., user of our specialization method) can employ:
- * precision and recall for measuring the quality of the classification and perhaps identifying some "missing" opportunities. Overall it can drive the learning strategy: for example, with more (non-acceptable) configurations in the training set, precision and recall can perhaps be improved. 
- * NPV and specificity for measuring the safety and flexibility of the resulting system. 
+* precision and recall for measuring the quality of the classification and perhaps identifying some "missing" opportunities. Overall it can drive the learning strategy: for example, with more (non-acceptable) configurations in the training set, precision and recall can perhaps be improved. 
+* NPV and specificity for measuring the safety and flexibility of the resulting system. 
  In practice, there is (sometimes) a trade-off to find between flexibility and safety, depending on the specificities of the configurable system and its usage. Let us take two examples. 
  On the one hand, critical configurable systems have to be highly safe: Leaving a large portion of non-acceptable (and thus unsafe) configurations is not suited. On the other hand, there are configurable systems for which flexibility is the key since it attracts lots of customers. 
 The extent to which safety and flexibility can be degraded is the decision of a "specializer": NPV and specificity help in such a task.
@@ -139,14 +139,14 @@ For each configurable system, performance objective (defining the percentage of 
 #### Reproducibility 
 
 For the sake of verifiability and reproducibility of the experiments we provide:
- * All heatmaps, plots, and figures. We can only present a few figures
+* All heatmaps, plots, and figures. We can only present a few figures
    in a typical academic paper (because of the page number limit) and we
    aim to supplement it.  
- * A git repository containing all data and the
+* A git repository containing all data and the
    scripts used to: i) execute the procedures over different
    configurable systems; ii) generate all the different graphs,
    heatmaps, etc.  
- * Details on how we have collected and prepared data
+* Details on how we have collected and prepared data
 
 ## Details of the content 
 
@@ -167,9 +167,9 @@ The tables (CSV files) out of which we have produced heatmaps are also available
 ### Graphs/tables
 
 In addition we have fixed the number of acceptable configurations (in the population and as defined by an objective value) to 20%, 50%, and 80% and we have ploted the evolution of classification metric (accuracy, precision, recall, etc.) with regards to the size of the training set.
- * 50% means that there are as non-acceptable configurations as there are acceptable ones. 
- * 20% means that 80% of configurations are non-acceptable: It is a challenge to discard all of them. 
- * 80% means that only 20% are non-acceptable: It can seen as challenging to learn from few non-acceptable configurations 
+* 50% means that there are as non-acceptable configurations as there are acceptable ones. 
+* 20% means that 80% of configurations are non-acceptable: It is a challenge to discard all of them. 
+* 80% means that only 20% are non-acceptable: It can seen as challenging to learn from few non-acceptable configurations 
 
 Such graphs help to visualize the effect of the size of the training set. 
 The general trend is that the more configurations we have in the training set, more effective our technique is.
