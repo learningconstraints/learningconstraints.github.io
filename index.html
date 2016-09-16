@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Learningconstraints.GitHub.io by learningconstraints</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/learningconstraints">View On GitHub</a></li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Learningconstraints.GitHub.io</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/learningconstraints">learningconstraints</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <hr>
+
+<p>layout: page
+title: Learning constraints!</p>
+
+<h2>
+<a id="tagline-supporting-tagline" class="anchor" href="#tagline-supporting-tagline" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>tagline: Supporting tagline</h2>
+
+<h1>
+<a id="learning-based-performance-specialization-of-configurable-systems-submitted-at-icse17" class="anchor" href="#learning-based-performance-specialization-of-configurable-systems-submitted-at-icse17" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Learning-Based Performance Specialization of Configurable Systems (submitted at ICSE'17)</h1>
+
+<p>A large scale configurable system typically offers thousands of options or parameters to let the engineers customize it for specific needs. Among the resulting many billions possible configurations, relating option and parameter values to desired performance is then a daunting task relying on a deep know how of the internals of the configurable system. We propose a staged configuration process to narrow the space of possible configurations to a good approximation of those satisfying the wanted high level customer requirements. Based on an oracle (e.g. a runtime test) that tells us whether a given configuration meets the non-functional requirements (e.g. speed or memory footprint), we leverage machine learning to retrofit the acquired knowledge into a variability model of the system that can be used to automatically specialize the configurable system. </p>
+
+<p><strong>SPLC'16</strong>: In the repository <a href="https://github.com/learningconstraints/SPLC-16">https://github.com/learningconstraints/SPLC-16</a>,  you will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference. The goal was mostly to avoid <em>faulty</em> configurations and correct a video generator developed in the industry. The oracle was simply a yes/no procedure. </p>
+
+<p>In <strong>ICSE'17</strong>, we have considered performance qualities. The oracle is parametrized with an <strong><em>objective value</em></strong> that users of our specialization method can control. Hence our proposal can be seen as a generalization of the idea originally proposed in SPLC'16. Moreover our empirical results cover more systems and classification metrics while taking training sizes and objective values into account <a href="https://github.com/learningconstraints/ICSE-17">https://github.com/learningconstraints/ICSE-17</a>.</p>
+
+<p><strong>Objective of this page</strong>: Our ICSE'17 results show that, for many different kinds of objectives and performance qualities, the approach has interesting accuracy, precision and recall after a learning stage based on a relative small number of random samples. This page describes how we gather and process input data, how we compute classification metrics. Furthermore, all plots, heatmaps, and figures can be visualized. We aim here to supplement our original material (it is impossible to include all relevant figures we have generated!) and also support an independent verification and replication of our study. 
+We also aim to provide a practical reading grid of classification metrics for users of our method. </p>
+
+<h2>
+<a id="empirical-study" class="anchor" href="#empirical-study" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Empirical Study</h2>
+
+<h4>
+<a id="subject-systems" class="anchor" href="#subject-systems" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Subject systems</h4>
+
+<p>We performed our experiments on a publicly-available dataset used in previous works. The dataset includes sets of configurations of real-world configurable systems that have been executed and measured over different performance metrics (more details hereafter). Configurable systems come from various domains and are implemented in different languages (C, C++ and Java). The number of options varies from as little as ten, up to about sixty; options can take Boolean and numerical values. The two last columns show, first, the total number of different possible configurations existing for the system and, last, the number of configurations that have been generated and measured in previous works ("All" meaning all different configurations have been measured).
+It should be noted that most benchmarks measure a single performance value, except for x264 where benchmarks evaluate 7 performance metrics.</p>
+
+<h4>
+<a id="experimental-setup" class="anchor" href="#experimental-setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Experimental setup</h4>
+
+<p>For each subject system, we have randomly selected a certain number of configurations from the ones available in the public dataset: our ML method operates over a <strong><em>training sample</em></strong> to learn a separating function. All remaining configurations form the <strong><em>test sample</em></strong>, i.e., it is the whole configuration set minus the training set. They are used to verify whether the classification of our ML is correct. For instance, the public dataset contains 69,000 different configurations for x264. If we used 500 of them to learn constraints, then we evaluate the classification quality of ML on the remaining 68,500 configurations.</p>
+
+<p>For each configurable system, we make <strong><em>vary the sample size</em></strong> one by one, from 1 to the total number of configurations. We make vary the <em>objective value</em> between the lower and upper bounds of the performance measured in each dataset. We notice that threshold values have direct influence on the
+<strong><em>percentage of acceptable configurations</em></strong>. For instance, for x264, an execution time (speed) threshold less than 100s leads to only 21.4% of acceptable configurations. We thus vary the objective value from 0% to 100% of acceptable configuration with steps of 5%.</p>
+
+<h3>
+<a id="classification-measurements" class="anchor" href="#classification-measurements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Classification measurements</h3>
+
+<p>We consider that configurations are <strong><em>acceptable</em></strong> (resp. <strong><em>non-acceptable</em></strong>) w.r.t a performance objective.</p>
+
+<p>Our learning-based technique can introduce errors in the following cases:</p>
+
+<ul>
+<li>a configuration is valid (and thus classified as acceptable) despite being non-acceptable â€“ the system is under-constrained and unsafe;</li>
+<li>a configuration is not valid (and thus classified as non-acceptable) despite being acceptable (the system is over-constrained and lacks flexibility).</li>
+</ul>
+
+<p>We expect to observe such cases:</p>
+
+<ul>
+<li>a configuration is valid and correctly classified as acceptable; </li>
+<li>a configuration is non-valid and correctly classified as non-acceptable.</li>
+</ul>
+
+<p>In our case, positive class (also called class-1) corresponds to non-acceptable configurations that we want to discard. The negative class (also called class-0) corresponds to acceptable
+configurations that we want to keep. There are four possible situations represented in a confusion matrix (see Figure):</p>
+
+<ul>
+<li>True Positives (TP) and True Negatives (TN) are on the main diagonal and represent the set of correctly classified configurations;</li>
+<li>False Positive (FP) and False Negatives (FN), on the contrary, represent classification errors</li>
+</ul>
+
+<p>For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics. 
+  <img src="%7B%7B%20site.url%20%7D%7D/assets/figure.png" alt="Figure"></p>
+
+<p>We rely on standard metrics used for binary classification problems. 
+We used 5 metrics since they give a different and complementary perspective on the "quality" of our learning-based method. </p>
+
+<h3>
+<a id="classification-metrics" class="anchor" href="#classification-metrics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Classification metrics</h3>
+
+<ul>
+<li>
+<strong>Accuracy</strong> measures the portion of configurations accurately classified as acceptable and non-acceptable. It gives a global <em>classification</em> "performance" of the learning phase.<br>
+</li>
+</ul>
+
+<p>However accuracy alone can have limited interest since it hinders important phenomena. 
+In the example (see Figure),  you can have a high accuracy despite the clear limits of the learning phase of identifying non-acceptable configurations (precision is 29% and recall is 40%). 
+<em>So why is there a high accuracy and a low precision and recall?</em> 
+Because the class of "acceptable configurations" is much more represented (800+100=900 out of 1000). It is too easy to have a high accuracy with basically no specialization.<br>
+On the one hand, accuracy gives a global classification measurement of our method. 
+On the other hand, accuracy is unable to show the weaknesses of a naÃ¯ve classification strategy (e.g., "keeping everything as acceptable")</p>
+
+<p>Intuitively, in our specific problem, we also need to measure the precision and recall
+of our classification. It can give better insights on our ability to (1) discard non-acceptable configurations and (2) to keep acceptable configurations.</p>
+
+<ul>
+<li><p><strong>Precision</strong>: measure our ability to correctly classify non-acceptable configurations. 
+In our example, precision is 40 / (100 + 40) = 40 / 140 = 29%. The learning wrongly classifies a large portion of non-acceptable configurations. </p></li>
+<li><p><strong>Recall</strong> (also called true positive rate): measure our ability to comprehensively identify non-acceptable configurations. In our example, recall is 40 / (40 + 60) = 40%. 
+Here, the learning misses a large portion of non-acceptable configurations. </p></li>
+</ul>
+
+<p>A low recall may be problematic, since numerous non-acceptable configurations have not been classified as such: Users may still choose <strong><em>unsafe</em></strong> configurations. 
+A low precision may be problematic as well since numerous non-acceptable configurations
+are actually acceptable: Users may lose some <strong><em>flexibility</em></strong>.</p>
+
+<p>Precision and recall measure the ability of our system to <strong>classify</strong> non-acceptable configurations. However it says nothing on how safe and flexible is our resulting
+specialized configurable system:</p>
+
+<ul>
+<li>How many valid configurations of our resulting specialized configurable system are truly acceptable? A low proportion and users will perform numerous configuration errors since the system is not enough safe. </li>
+<li>How many configurations have been unnecessarily removed whereas they should still be reachable? A low proportion and users will have little configuration choices at their disposal.<br>
+</li>
+</ul>
+
+<p>We thus need two additional metrics. 
+<strong>Specificity</strong> (also called true negative rate) quantifies how flexible is
+the specialized system. In the example, (800 / 800 + 100) =  89% of configurations will be reachable in the new specialized system.</p>
+
+<p><strong>NPV</strong> (also called negative predictive value) quantifies how safe is the specialized system. In In the example, (800 / 800 + 60) = 93% of configurations will be safe in the new specialized system. </p>
+
+<h3>
+<a id="how-does-a-learning-based-method-compete-with-a-non-learning-based-method" class="anchor" href="#how-does-a-learning-based-method-compete-with-a-non-learning-based-method" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How does a learning-based method compete with a non-learning based method?</h3>
+
+<p>The example shows that, despite a low precision (29%) and recall (40%), the resulting specialized configurable system is quite safe (93%) and flexible (89%). 
+Our learning phase misses some opportunities and introduces some errors, but the overall process may still be of interest since we have a <em>safer</em> system than originally and the flexibility is arguably reasonable.</p>
+
+<p>Without a specialization, all configurations are classified as acceptable, and the metrics are as follows in our specific example:</p>
+
+<ul>
+<li>accuracy is 90%</li>
+<li>precision is ~0</li>
+<li>recall is  0<br>
+</li>
+<li>specificity is always 100% (the system is highly flexible) </li>
+<li>NPV is 90% (the system is quite safe), but it is less than 93%</li>
+</ul>
+
+<p>It shows an improvement of 3% for the safety of the system. Obviously, it is just an example. The potential of our technique mostly resides in cases the performance objective leads to numerous non-acceptable configurations: We can learn and identify them, leading to safer configurable systems. </p>
+
+<p>In general, a non-learning based method has always a precision is equal to 0, recall is equal to 0, specificity is equal to 100%. 
+Hence we cannot beat a non-learning in terms of flexibility, since it keeps everything as acceptable. </p>
+
+<p>However the safety of the resulting system may be very low. It is equal to:
+NPV_nonlearning = TN / (TN + TP) = number of acceptable configurations / number of configurations in total. We can thus compute a new metric, called <strong>negNPV</strong>, that is equal to NPV - NPV_nonlearning. The higher negNPV, the safer is our specialized system comparatively to a non-specialized system. Our empirical results confirm that we are safer in the vast majority of cases, even for a small training set. </p>
+
+<p>Similarly, we can compute negAccuracy (difference of accuracy between a non-specialized method and our learning-based method). </p>
+
+<h3>
+<a id="reading-grid-of-classification-metrics" class="anchor" href="#reading-grid-of-classification-metrics" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reading grid of classification metrics</h3>
+
+<p>To sum up:</p>
+
+<ul>
+<li>there are three classification metrics that measure our ability to <em>classify</em> (accuracy, precision, recall). </li>
+<li>accuracy gives a global classification "performance" of the learning phase </li>
+<li>accuracy alone has limitations since it does not quantify the classification of non-acceptable configurations; precision and recall should be used in complement </li>
+<li>high accuracy does not imply high precision or high recall: it is a theoretical statement (see formulae) and empirical results confirm there is no correlation between accuracy, precision and recall </li>
+<li>NPV and specificity characterize how safe and flexible is the resulting specialized system (precision and recall cannot) </li>
+<li>a high (resp. low) specifity means a high (resp. low) flexibility of the resulting system</li>
+<li>a high (resp. low) NPV means a high (resp. low) safety of the resulting system</li>
+<li>a low precision or low recall does not imply a low NPV or specificity. For instance, the classification metric can be low and, yet, leads to a highly safe and flexible system</li>
+</ul>
+
+<p>A "specializer" (i.e., user of our specialization method) can employ:</p>
+
+<ul>
+<li>precision and recall for measuring the quality of the classification and perhaps identifying some "missing" opportunities. Overall it can drive the learning strategy: for example, with more (non-acceptable) configurations in the training set, precision and recall can perhaps be improved. </li>
+<li>NPV and specificity for measuring the safety and flexibility of the resulting system. 
+In practice, there is (sometimes) a trade-off to find between flexibility and safety, depending on the specificities of the configurable system and its usage. Let us take two examples. 
+On the one hand, critical configurable systems have to be highly safe: Leaving a large portion of non-acceptable (and thus unsafe) configurations is not suited. On the other hand, there are configurable systems for which flexibility is the key since it attracts lots of customers. 
+The extent to which safety and flexibility can be degraded is the decision of a "specializer": NPV and specificity help in such a task.</li>
+</ul>
+
+<p>An important point is that some <strong>performance objectives</strong> (w.r.t. execution time, energy consumption, etc.) can lead to a high (resp. low) percentage of non-acceptable configurations. It can complicate the learning phase and thus both influence accuracy, precision, and recall. 
+The definition of performance objectives can also influence NPV and specificity. For example, it is hard to be completely safe when numerous non-acceptable configurations have to be removed. You can miss a small portion of them and, yet, it is a lot of unsafe configurations that remain within the specialized system. 
+Another factor is the <strong>size of the training set</strong>. It may influence both accuracy, precision, recall, NPV, and specificity. </p>
+
+<p>With our empirical results, we aim to further understand the effectiveness of our learning-based method w.r.t any performance objective and training set.
+For each configurable system, performance objective (defining the percentage of acceptable configurations in the population), and size of the training set, we have computed accuracy, precision, recall, NPV, specificity, negNPV and negAccuracy. </p>
+
+<h4>
+<a id="reproducibility" class="anchor" href="#reproducibility" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reproducibility</h4>
+
+<p>For the sake of verifiability and reproducibility of the experiments we provide:</p>
+
+<ul>
+<li>All heatmaps, plots, and figures. We can only present a few figures
+in a typical academic paper (because of the page number limit) and we
+aim to supplement it.  </li>
+<li>A git repository containing all data and the
+scripts used to: i) execute the procedures over different
+configurable systems; ii) generate all the different graphs,
+heatmaps, etc.<br>
+</li>
+<li>Details on how we have collected and prepared data</li>
+</ul>
+
+<h2>
+<a id="details-of-the-content" class="anchor" href="#details-of-the-content" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Details of the content</h2>
+
+<p>The repository is available here: <a href="https://github.com/learningconstraints/ICSE-17">https://github.com/learningconstraints/ICSE-17</a></p>
+
+<h3>
+<a id="heatmaps" class="anchor" href="#heatmaps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Heatmaps</h3>
+
+<p>We have generated numerous <a href="https://github.com/learningconstraints/ICSE-17/tree/master/1.heatmaps/results">heatmaps</a> for each configurable system. </p>
+
+<p>X-axis: size of the training set
+Y-axis: percentage of acceptable configurations (as influenced by the objective treshold value)
+Classification metric: the darker, the higher is the classification metric (usually from 0 to 1)
+It includes accuracy, precision, recall, NPV, specificity, negNPV and negAccuracy. 
+It is a total of 7 heatmaps per system, with variations of training sets and performance objectives. </p>
+
+<p>The tables (CSV files) out of which we have produced heatmaps are also available. </p>
+
+<h3>
+<a id="graphstables" class="anchor" href="#graphstables" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Graphs/tables</h3>
+
+<p>In addition we have fixed the number of acceptable configurations (in the population and as defined by an objective value) to 20%, 50%, and 80% and we have ploted the evolution of classification metric (accuracy, precision, recall, etc.) with regards to the size of the training set.</p>
+
+<ul>
+<li>50% means that there are as non-acceptable configurations as there are acceptable ones. </li>
+<li>20% means that 80% of configurations are non-acceptable: It is a challenge to discard all of them. </li>
+<li>80% means that only 20% are non-acceptable: It can seen as challenging to learn from few non-acceptable configurations </li>
+</ul>
+
+<p>Such graphs help to visualize the effect of the size of the training set. 
+The general trend is that the more configurations we have in the training set, more effective our technique is.
+<a href="https://github.com/learningconstraints/ICSE-17/tree/master/2.metric_view/results">https://github.com/learningconstraints/ICSE-17/tree/master/2.metric_view/results</a></p>
+
+<h3>
+<a id="code" class="anchor" href="#code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h3>
+
+<ol>
+<li>Learning phase<br>
+</li>
+<li>Computation of classification scores (see <a href="https://github.com/learningconstraints/ICSE-17/tree/master/2.metric_view">https://github.com/learningconstraints/ICSE-17/tree/master/2.metric_view</a> and <a href="https://github.com/learningconstraints/ICSE-17/tree/master/3.synthetic_view">https://github.com/learningconstraints/ICSE-17/tree/master/3.synthetic_view</a>)</li>
+<li>Depicting heatmaps or plots (<a href="https://github.com/learningconstraints/ICSE-17/tree/master/1.heatmaps">https://github.com/learningconstraints/ICSE-17/tree/master/1.heatmaps</a>) </li>
+</ol>
+
+<h3>
+<a id="input-data" class="anchor" href="#input-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Input data</h3>
+
+<p>Performance measurements of subject systems. 
+It is available here: <a href="https://github.com/learningconstraints/ICSE-17/tree/master/datasets">https://github.com/learningconstraints/ICSE-17/tree/master/datasets</a></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
