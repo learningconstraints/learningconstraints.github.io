@@ -134,22 +134,27 @@ It should be noted that most benchmarks measure a single performance value, exce
 
 <p>We consider that configurations are <strong><em>acceptable</em></strong> (resp. <strong><em>non-acceptable</em></strong>) w.r.t a performance objective.</p>
 
-<p>Our learning-based technique can introduce errors in the following cases:
- - a configuration is valid (and thus classified as acceptable) despite being non-acceptable â€“ the system is under-constrained and unsafe;
- - a configuration is not valid (and thus classified as non-acceptable) despite being acceptable (the system is over-constrained and lacks flexibility).</p>
+<p>Our learning-based technique can introduce errors in the following cases:</p>
+<ul>
+  <li>a configuration is valid (and thus classified as acceptable) despite being non-acceptable â€“ the system is under-constrained and unsafe;</li>
+  <li>a configuration is not valid (and thus classified as non-acceptable) despite being acceptable (the system is over-constrained and lacks flexibility).</li>
+</ul>
 
-<p>We expect to observe such cases:
- - a configuration is valid and correctly classified as acceptable; 
- - a configuration is non-valid and correctly classified as non-acceptable.</p>
+<p>We expect to observe such cases:</p>
+<ul>
+  <li>a configuration is valid and correctly classified as acceptable;</li>
+  <li>a configuration is non-valid and correctly classified as non-acceptable.</li>
+</ul>
 
 <p>In our case, positive class (also called class-1) corresponds to non-acceptable configurations that we want to discard. The negative class (also called class-0) corresponds to acceptable
 configurations that we want to keep. There are four possible situations represented in a confusion matrix (see Figure):</p>
 <ul>
   <li>True Positives (TP) and True Negatives (TN) are on the main diagonal and represent the set of correctly classified configurations;</li>
   <li>False Positive (FP) and False Negatives (FN), on the contrary, represent classification errors</li>
-  <li>For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics. 
-  <img src="/assets/figure.png" alt="Figure" /></li>
 </ul>
+
+<p>For obtaining TP, TN, FP, and FN, we confront the classifications made by ML in the training set with the oracle decisions available in the testing set. Based on a confusion matrix, we can compute several classification metrics. 
+  <img src="/assets/figure.png" alt="Figure" /></p>
 
 <p>We rely on standard metrics used for binary classification problems. 
 We used 5 metrics since they give a different and complementary perspective on the “quality” of our learning-based method.</p>
