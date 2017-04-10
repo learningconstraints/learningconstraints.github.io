@@ -3,17 +3,26 @@ layout: page
 title: Learning constraints!
 tagline: Supporting tagline
 ---
-# Learning-Based Performance Specialization of Configurable Systems (submitted at ICSE'17)
+# Learning-Based Performance Specialization of Configurable Systems 
 
 
 A large scale configurable system typically offers thousands of options or parameters to let the engineers customize it for specific needs. Among the resulting many billions possible configurations, relating option and parameter values to desired performance is then a daunting task relying on a deep know how of the internals of the configurable system. We propose a staged configuration process to narrow the space of possible configurations to a good approximation of those satisfying the wanted high level customer requirements. Based on an oracle (e.g. a runtime test) that tells us whether a given configuration meets the non-functional requirements (e.g. speed or memory footprint), we leverage machine learning to retrofit the acquired knowledge into a variability model of the system that can be used to automatically specialize the configurable system. 
 
 **SPLC'16**: In the repository https://github.com/learningconstraints/SPLC-16,  you will find all the required artefacts to replicate the experiments included in our paper submitted to the 20th International Systems and Software Product Line Conference. The goal was mostly to avoid *faulty* configurations and correct a video generator developed in the industry. The oracle was simply a yes/no procedure. 
 
-In **ICSE'17**, we have considered performance qualities. The oracle is parametrized with an ***objective value*** that users of our specialization method can control. Hence our proposal can be seen as a generalization of the idea originally proposed in SPLC'16. Moreover our empirical results cover more systems and classification metrics while taking training sizes and objective values into account https://github.com/learningconstraints/ICSE-17.
+In **RR'17**, we have considered performance qualities. The oracle is parametrized with an ***objective value*** that users of our specialization method can control. Hence our proposal can be seen as a generalization of the idea originally proposed in SPLC'16. Moreover our empirical results cover more systems and classification metrics while taking training sizes and objective values into account https://github.com/learningconstraints/ICSE-17.
 
-**Objective of this page**: Our ICSE'17 results show that, for many different kinds of objectives and performance qualities, the approach has interesting accuracy, precision and recall after a learning stage based on a relative small number of random samples. This page describes how we gather and process input data, how we compute classification metrics. Furthermore, all plots, heatmaps, and figures can be visualized. We aim here to supplement our original material (it is impossible to include all relevant figures we have generated!) and also support an independent verification and replication of our study. 
+**Objective of this page**: Our RR'17 results show that, for many different kinds of objectives and performance qualities, the approach has interesting accuracy, precision and recall after a learning stage based on a relative small number of random samples. This page describes how we gather and process input data, how we compute classification metrics. Furthermore, all plots, heatmaps, and figures can be visualized. We aim here to supplement our original material (it is impossible to include all relevant figures we have generated!) and also support an independent verification and replication of our study. 
 We also aim to provide a practical reading grid of classification metrics for users of our method. 
+	 
+A research report is also freely available online https://hal.archives-ouvertes.fr/hal-01467299: 
+`
++Paul Temple, Mathieu Acher, Jean-Marc A Jézéquel, Léo A Noel-Baron, and José A Galindo. "Learning-Based Performance Specialization of Configurable Systems" (2017), Research report, University of Rennes 1 (IRISA/Inria).
+`
+  		  
+ ## Empirical Study		 ## Empirical Study
+ 		 
+
 
  
 ## Empirical Study
